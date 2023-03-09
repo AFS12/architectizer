@@ -1,0 +1,18 @@
+@import './login/login';
+@import './home/home';
+
+.main-layout{
+    .app-bar-styles{
+        border-bottom: solid 5px #DBC4AC !important;
+
+        .title{
+            font-size: 18px !important;
+            font-family: 'Logo font' !important;
+            color: #49504B;
+
+            .icon{
+                margin-bottom: 3px;
+            }
+        }
+    }
+}
