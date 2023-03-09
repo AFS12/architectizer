@@ -1,0 +1,121 @@
+
+.login{
+height: 90vh;
+overflow: hidden;
+margin: 0 !important;
+
+    .login-register{
+        text-align: center;
+        background-image: linear-gradient(to bottom right, #49504ba4, #ce9c6ba1, #d8d5d0);
+        position: relative;
+        
+
+        .logo-login{
+            margin-top: 100px;
+            color: #E8EBED;
+            font-size: 120px;
+            -webkit-text-stroke: 1px #49504B;
+        }
+        
+        .logo-register{
+            margin-top: 30px;
+            color: #E8EBED;
+            font-size: 80px;
+            -webkit-text-stroke: 1px #49504B;
+        }
+
+        .logo-title-login{
+            font-family: 'Logo font';
+            color: #E8EBED;
+            -webkit-text-stroke: 0.1px #747979;
+            line-height: 30px;
+
+            h1{
+                font-size: 45px;
+            }
+
+            h3{
+                font-size: 23px;
+            }
+        }
+        
+        .logo-title-register{
+            font-family: 'Logo font';
+            font-size: 35px;
+            color: #E8EBED;
+            -webkit-text-stroke: 0.1px #747979;
+            line-height: 30px;
+
+            h1{
+                font-size: 45px;
+            }
+
+            h3{
+                font-size: 23px;
+            }
+        }
+
+        .login-card{
+            margin: 70px auto 0 auto;
+            background-color: #eeeff0;
+            text-align: start;
+            color: #5D6460;
+
+            .login-form{
+                margin-top: 10px;
+            }
+
+            .login-btn{
+                margin-top: 10px;
+            }
+
+            .create-account{
+                margin: 40px 0 20px 0 !important;
+                text-align: center !important;
+
+                .new-account-link{
+                color: #CE9D6B;
+                text-decoration: underline;
+                cursor: pointer;
+                margin-left: 20px;
+                }
+            }
+
+            .created-alert{
+                margin-top: 0;
+                margin-bottom: -30px;
+            }
+        }
+
+        .register-card{
+            margin: 50px auto 0 auto;
+            background-color: #eeeff0;
+            text-align: start;
+            color: #5D6460;
+
+            .create-account-btn{
+                margin-bottom: 10px;
+            }
+
+            .register-btn{
+                margin-top: 10px;
+            }
+
+            .back-btn{
+                font-size: 12px;
+                margin-top: 10px;
+            }
+        }
+
+        .footer{
+            position: absolute;
+            font-weight: 700;
+            color: #E4E6E6;
+            width: 100%;
+            background-image: linear-gradient(to bottom , #d5b08c48, #D5B18C);
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
