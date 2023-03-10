@@ -84,7 +84,6 @@ export default {
   methods: {
 
     loginFail(){
-      console.log("TESTE")
       this.alertColor = 'error',
       this.alertMessage = 'Dados de login incorretos'
       this.alert = true
