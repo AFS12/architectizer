@@ -1,6 +1,10 @@
 import CryptoJS from 'crypto-js';
 
 function validarToken(token) {
+  
+    if (token == undefined || token == null) {
+      return false
+    }
     const [header, payload, signature] = token.split('.');
 
     const decodedPayload = JSON.parse(atob(payload));
