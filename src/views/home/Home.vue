@@ -1,66 +1,117 @@
 <template>
   <section class="home-content">
-    <h1>Bem vindo, {{ getUserName() }}!</h1> 
+    <h1>Bem vindo, {{ getUserName() }}!</h1>
     <br />
 
-    <v-card elevation="0">
-      <v-card-title primary-title> Serviços solicitados </v-card-title>
-      <v-card-text>
-        <v-row>
-          <v-col cols="4">
-            <v-card class="service-card">
-              <v-card-title primary-title> Titulo serviço </v-card-title>
-              <v-card-text> Descrição serviço </v-card-text>
-              <v-card-actions class="actions">
-                <v-row>
-                  <v-col>
-                    <v-btn color="#5D6460" block dark>Rejeitar</v-btn>
-                  </v-col>
-                  <v-col>
-                    <v-btn color="#CE9D6B" block dark>Aceitar</v-btn>
-                  </v-col>
-                </v-row>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
+    <ArchitectPanel
+      :loadingData="loadingData"
+      :services="services"
+      @loadingData="loadingData = true"
+      @updateServicesDate="basicRequisition()"
+      v-if="user.type == 1"
+    />
+
+    <ClientPanel
+      :loadingData="loadingData"
+      :architects="architects"
+      :user="user"
+      @loadingData="loadingData = true"
+      @updateServicesDate="basicRequisition()"
+      v-else
+    />
   </section>
 </template>
 <script>
 import axiosInstance from "../../plugins/axiosInstance";
+import ArchitectPanel from "./ArchitectPanel.vue";
+import ClientPanel from "./ClientPanel.vue";
+import capitalizeName from "../../plugins/capitalize";
 
 export default {
+  components: {
+    ArchitectPanel,
+    ClientPanel,
+  },
+
   data() {
     return {
       user: {},
+      services: [],
+      architects: [],
+      loadingData: false,
     };
   },
 
   created() {
-    axiosInstance
-      .get(`/users/userdata/${localStorage.getItem("architectizer_token")}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        // faça algo com a resposta
-        if (response.status == 200) {
-          this.user = response.data.user;
-        }
-      })
-      .catch((error) => {
-        // trate o erro
-        console.log(error);
-      });
+    this.basicRequisition();
   },
 
   methods: {
     getUserName() {
-      const words = this.user.name.split(" ");
-      return words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase();
+      if (this.user.name) {
+        return capitalizeName(this.user.name);
+      }
+    },
+
+    async basicRequisition() {
+      this.loadingData = true;
+      await axiosInstance
+        .get(`/users/userdata/${localStorage.getItem("architectizer_token")}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          // faça algo com a resposta
+          if (response.status == 200) {
+            this.user = response.data.user;
+          }
+        })
+        .catch((error) => {
+          // trate o erro
+          console.log(error);
+        });
+
+      if (this.user.type == 1) {
+        await axiosInstance
+          .get(`/services/${this.user.id}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            // faça algo com a resposta
+            if (response.status == 200) {
+              this.services = response.data.services;
+              this.loadingData = false;
+            }
+          })
+          .catch((error) => {
+            // trate o erro
+            console.log(error);
+          });
+      }
+
+      if (this.user.type == 0) {
+        await axiosInstance
+          .get(`/users/architects`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            // faça algo com a resposta
+            if (response.status == 200) {
+              this.architects = response.data.architects;
+              this.loadingData = false;
+            }
+          })
+          .catch((error) => {
+            // trate o erro
+            console.log(error);
+          });
+        this.loadingData = false;
+      }
     },
   },
 };
