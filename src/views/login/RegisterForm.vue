@@ -83,6 +83,11 @@
           </v-col>
         </v-row>
       </v-form>
+      <v-row v-show="invalidData">
+        <v-spacer></v-spacer>
+        <h3 class="invalid-data">Dados Invalidos inseridos</h3>
+        <v-spacer></v-spacer>
+      </v-row>
     </v-card-text>
     <v-card-actions class="create-account-btn">
       <v-row>
@@ -124,6 +129,7 @@ export default {
     return {
       creating: false,
       showPassword: false,
+      invalidData: false,
       rules: {
         required: (value) => !!value || "Este campo é obrigatório",
         email: (value) => {
@@ -227,6 +233,8 @@ export default {
           // faça algo com a resposta
           if (response.status == 201) {
             this.$emit("created");
+          } else {
+            this.invalidData = true
           }
           this.creating = false;
         })

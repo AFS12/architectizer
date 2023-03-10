@@ -19,18 +19,22 @@
                 :key="index"
                 v-show="service.status == 0"
               >
-                <v-card class="service-card" color="#E4E6E6">
+                <v-card class="service-card" color="#E4E6E6" height="480">
                   <v-card-title primary-title>
                     {{ service.title }}
                   </v-card-title>
                   <v-card-subtitle primary-title>
-                    Solicitante - {{ capitalize(service.requester) }}
+                    <h4>Solicitante</h4>
+                    {{ capitalize(service.requester) }}
                     <br />
+                    <h4>status</h4>
                     <v-chip color="#187c9b79" small dark>
                       {{ getStatus(service.status) }}
                     </v-chip>
                   </v-card-subtitle>
-                  <v-card-text> {{ service.description }} </v-card-text>
+                  <v-card-text :style="descriptionSize(service.description, 23)">
+                    {{ service.description }}
+                  </v-card-text>
                   <v-card-actions class="actions">
                     <v-row>
                       <v-col>
@@ -89,7 +93,7 @@
                 :key="index"
                 v-show="service.status == 3"
               >
-                <v-card class="service-card" color="#E4E6E6">
+                <v-card class="service-card" color="#E4E6E6" height="480">
                   <v-card-title primary-title>
                     {{ service.title }}
                   </v-card-title>
@@ -100,7 +104,9 @@
                       {{ getStatus(service.status) }}
                     </v-chip>
                   </v-card-subtitle>
-                  <v-card-text> {{ service.description }} </v-card-text>
+                  <v-card-text :style="descriptionSize(service.description, 26)">
+                    {{ service.description }}
+                  </v-card-text>
                   <v-card-actions class="actions">
                     <v-row>
                       <v-col>
@@ -109,8 +115,9 @@
                           block
                           dark
                           @click="changeServiceStatus(0, service.id)"
-                          >Restaurar</v-btn
                         >
+                          Restaurar
+                        </v-btn>
                       </v-col>
                     </v-row>
                   </v-card-actions>
@@ -140,7 +147,7 @@
                 :key="index"
                 v-show="service.status == 1"
               >
-                <v-card class="service-card" color="#E4E6E6">
+                <v-card class="service-card" color="#E4E6E6" height="300">
                   <v-card-title primary-title>
                     {{ service.title }}
                   </v-card-title>
@@ -151,7 +158,9 @@
                       {{ getStatus(service.status) }}
                     </v-chip>
                   </v-card-subtitle>
-                  <v-card-text> {{ service.description }} </v-card-text>
+                  <v-card-text :style="descriptionSize(service.description, 23)">
+                    {{ service.description }}
+                  </v-card-text>
                 </v-card>
               </v-col>
             </v-row>
@@ -176,7 +185,7 @@
                 :key="index"
                 v-show="service.status == 2"
               >
-                <v-card class="service-card" color="#E4E6E6">
+                <v-card class="service-card" color="#E4E6E6" height="300">
                   <v-card-title primary-title>
                     {{ service.title }}
                   </v-card-title>
@@ -187,7 +196,9 @@
                       {{ getStatus(service.status) }}
                     </v-chip>
                   </v-card-subtitle>
-                  <v-card-text> {{ service.description }} </v-card-text>
+                  <v-card-text :style="descriptionSize(service.description, 23)">
+                    {{ service.description }}
+                  </v-card-text>
                 </v-card>
               </v-col>
             </v-row>
@@ -239,6 +250,10 @@ export default {
           console.log(error);
           this.loading = false;
         });
+    },
+
+    descriptionSize(description, maxSize) {
+      return ` fontSize: ${maxSize - description.length / 23}px `;
     },
 
     getStatus(status) {

@@ -40,7 +40,7 @@
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn color="#5D6460" text @click="cancelRequest()">
+        <v-btn color="#5D6460" text @click="cancelRequest()" :disabled="alert">
           <strong> Cancelar </strong>
         </v-btn>
         <v-spacer></v-spacer>
@@ -54,7 +54,7 @@
           {{ alertMessage }}
           <v-progress-linear
             :active="alert"
-            :value="Math.floor(100 * (currentTime / 3000))"
+            :value="Math.floor(100 * (currentTime / 1000))"
             absolute
             bottom
             color="#E0E0DF"
@@ -230,7 +230,6 @@ export default {
     successRegister() {
       this.register = false;
       this.alert = true;
-      this.$emit("success");
       this.syncPbar();
     },
 
@@ -241,11 +240,12 @@ export default {
         this.currentTime += 100;
 
         //If our current time is larger than the timeout
-        if (3000 <= this.currentTime) {
+        if (1000 <= this.currentTime) {
           //Wait 500 miliseconds for the dom to catch up, then reset the snackbar
           setTimeout(() => {
             this.alert = false; //Update the alert to false
             this.cancelRequest();
+            this.$emit("success");
             this.currentTime = 0; // reset the current time
           }, 500);
         } else {

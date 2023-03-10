@@ -5,16 +5,31 @@
     background-color: #E8EBED;
 
     .service-card{
+        h4{
+            margin-top: 10px;
+        }
         .actions{
             padding: 20px;
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
         }
     }
 
     
     .architect-card{
+        h4{
+            margin-top: 10px;
+        }
         .actions{
             padding: 20px;
-
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
         }
     }
 }

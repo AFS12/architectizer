@@ -15,16 +15,16 @@
           ARCHITECTIZER        
         </h3>
       </div>
-      <LoginForm @to-register="register = true" v-show="!register">
+      <LoginForm @loginFail="loginFail()" @to-register="register = true" v-show="!register">
         <v-row class="created-alert">
           <v-spacer></v-spacer>
           <v-col cols="8">
             <v-alert
-              type="success"
+              :type="alertColor"
               :value="alert"
               transition="scale-transition"
             >
-              Conta criada com sucesso
+              {{alertMessage}}
               <v-progress-linear
               :active="alert"
               :value="Math.floor(100 * (currentTime / 4000))"
@@ -56,6 +56,8 @@ export default {
 
   data() {
     return {
+      alertColor: 'success',
+      alertMessage: '',
       register: false,
       alert: false,
       currentTime: 0,
@@ -81,7 +83,15 @@ export default {
 
   methods: {
 
+    loginFail(){
+      this.alertColor = 'error',
+      this.alertMessage = 'Dados de login incorretos'
+      this.alert = true
+    },
+
     successRegister(){
+      this.alertColor = 'success',
+      this.alertMessage = 'Conta criada com sucesso'
       this.register = false
       this.alert = true
     },
