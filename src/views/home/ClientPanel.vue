@@ -15,7 +15,7 @@
                 v-for="(architect, index) in architects"
                 :key="index"
               >
-                <v-card class="architect-card" color="#E4E6E6">
+                <v-card class="architect-card" color="#E4E6E6" height="250">
                   <v-card-title primary-title>
                     {{ capitalizeArchitectName(architect.name) }}
                   </v-card-title>
@@ -29,6 +29,7 @@
                         <v-dialog
                           v-model="requestServiceActive"
                           width="600"
+                          :retain-focus="false"
                           persistent
                         >
                           <template v-slot:activator="{ on, attrs }">
@@ -82,18 +83,20 @@
                 v-for="(service, index) in services"
                 :key="index"
               >
-                <v-card class="architect-card" color="#E4E6E6">
+                <v-card class="architect-card" color="#E4E6E6" height="490">
                   <v-card-title primary-title>
                     {{ service.title }}
                   </v-card-title>
                   <v-card-subtitle primary-title>
+                    <h4>Arquiteto</h4>
                     {{ capitalizeArchitectName(service.architectName) }}
                     <br />
+                    <h4>status</h4>
                     <v-chip :color="getStatusColor(service.status)" small dark>
                       {{ getStatus(service.status) }}
                     </v-chip>
                   </v-card-subtitle>
-                  <v-card-text>
+                  <v-card-text :style="descriptionSize(service.description, 22)">
                     {{ service.description }}
                   </v-card-text>
                   <v-card-actions class="actions" v-show="service.status == 0">
@@ -181,11 +184,7 @@ export default {
     },
 
     editServiceReset() {
-      this.editService = {
-        title: "",
-        description: "",
-        active: false,
-      };
+      this.editService.active = false
     },
 
     async getServices() {
@@ -237,6 +236,10 @@ export default {
           console.log(error);
           this.loading = false;
         });
+    },
+
+    descriptionSize(description, maxSize) {
+      return ` fontSize: ${maxSize - description.length / 23}px `;
     },
 
     getStatus(status) {

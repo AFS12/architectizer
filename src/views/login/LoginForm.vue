@@ -102,6 +102,8 @@ export default {
             const { token } = response.data;
             localStorage.setItem("architectizer_token", token);
             this.$router.push({ name: "Home" });
+          } else {
+            this.$emit('loginFail')
           }
           this.logging = false;
         })
